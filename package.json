@@ -1,0 +1,60 @@
+{
+  "name": "test-qrvey",
+  "version": "1.0.0",
+  "description": "This project conatins the backend code for an serverless aplication",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf dist",
+    "test": "jest --verbose --coverage --detectOpenHandles",
+    "createBucket": "dotenv -- cross-var aws s3api create-bucket --bucket %QRVEY_BUCKET_NAME% --region us-east-1",
+    "packDB": "cd database/ && npm run-script build && sam package --s3-bucket $npm_package_config_QRVEY_BUCKET_NAME --template-file dynamo_db.yaml --output-template-file dynamo_db-pack.yaml",
+    "deplDB": "cd database/ && sam deploy --template-file dynamo_db-pack.yaml --stack-name $npm_package_config_STACK_DB_NAME --region us-east-1 --capabilities CAPABILITY_NAMED_IAM",
+    "pack": "npm run-script build && sam package --s3-bucket $npm_package_config_QRVEY_BUCKET_NAME  --template-file qrvey.yaml --output-template-file qrvey-pack.yaml",
+    "depl": "sam deploy --template-file  qrvey-pack.yaml --s3-bucket $npm_package_config_QRVEY_BUCKET_NAME --stack-name $npm_package_config_STACK_NAME_BASE --region us-east-1 --capabilities CAPABILITY_NAMED_IAM --no-fail-on-empty-changeset",
+    "postbuild": "(cp package.json dist/package.json && cd dist && npm install --only=production)",
+    "build": "npm run clean && tsc -p ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dPerez-dreamcodesoft/qrvey-test.git"
+  },
+  "config": {
+    "STACK_NAME_BASE": "test-qrvey-backend",
+    "STACK_DB_NAME": "test-qrvey-db",
+    "QRVEY_BUCKET_NAME": "qrvet-bucket-backend"
+  },
+  "author": "Andres Felipe Perez",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dPerez-dreamcodesoft/qrvey-test/issues"
+  },
+  "homepage": "https://github.com/dPerez-dreamcodesoft/qrvey-test#readme",
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.77",
+    "@types/jest": "^26.0.23",
+    "aws-sdk-mock": "^5.1.0",
+    "jest": "^27.0.4",
+    "ts-jest": "^27.0.3",
+    "tslint": "^5.12.1",
+    "typescript": "^3.9.9"
+  },
+  "dependencies": {
+    "@types/node": "^15.12.2",
+    "aws-sdk": "^2.926.0",
+    "cross-var": "^1.1.0",
+    "dotenv": "^10.0.0",
+    "dotenv-cli": "^4.0.0",
+    "uuidv4": "^6.2.10",
+    "json-2-csv": "^3.14.0",
+    "jspdf": "^2.3.1"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "node",
+    "testTimeout": 100000,
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/dist/"
+    ]
+  }
+}
