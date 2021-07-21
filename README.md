@@ -15,12 +15,12 @@ This project is developed with NodeJS and Typescript, however because the data i
 - SAM (you need to have configurated SAM with your own credentials)
 ## how to deploy
 
-- ** npm install **
-- ** npm run createBucket ** (execute only if the bucket does not exist)
-- ** npm run packDB ** (execute only if the database tables does not exists or are updated)
-- ** npm run deplDB ** (execute only if the database tables does not exists or are updated)
-- ** npm run pack **
-- ** npm run depl **
+- **npm install**
+- **npm run createBucket** (execute only if the bucket does not exist)
+- **npm run packDB** (execute only if the database tables does not exists or are updated)
+- **npm run deplDB** (execute only if the database tables does not exists or are updated)
+- **npm run pack**
+- **npm run depl**
 
 Additionally you can run ** npm run test ** and it will create the coverage folder inside you can find inside a Icov-report folder a html file (index), if you open thar file you will be able to see the coverage.
 
