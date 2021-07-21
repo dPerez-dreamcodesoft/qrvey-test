@@ -1,4 +1,4 @@
-import pdfReports from '../controllers/pdfReports/pdfReports';
+import pdfReport from '../controllers/pdfReport/pdfReport';
 
 /**
  * @name pdfHeroesReports
@@ -6,6 +6,6 @@ import pdfReports from '../controllers/pdfReports/pdfReports';
  * @returns Object
  */
 export async function pdfHeroesReports():Promise<any>{
-    let response:any = await pdfReports.generateHeroesPdfReport();
+    let response:any = await pdfReport.generateHeroesPdfReport();
     return response;
 }

@@ -133,7 +133,7 @@ Resources:
         Properties:
             CodeUri: dist/
             Description: 'Get all the heros for create a csv report'
-            Handler: src/functions/csvReportHandler.csvHeroesReport
+            Handler: src/functions/excelReportHandler.excelSuperheroesReport
             Role: !GetAtt QrveyLambdaBackendIAMRole.Arn
             Runtime: nodejs12.x
             Timeout: 10

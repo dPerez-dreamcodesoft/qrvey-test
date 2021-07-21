@@ -1,5 +1,5 @@
 import { APIGatewayProxyResult } from "aws-lambda";
-import commonDB from "../../commons/commonDB";
+import operationsDB from "../../commons/operationsDB";
 import {
   DBConfigurations,
   Headers,
@@ -9,20 +9,20 @@ import {
 import genericFunctions from "../../utils/genericResponse";
 
 /**
- * @name Heroes
- * @description Class for heroes
+ * @name Superheroes
+ * @description Class for superheroes
  */
-class Heroes {
+class Superheroes {
   /**
-   * @name insertHeroe
-   * @description Method for insert a heroe
-   * @param body
+   * @name createSuperheroe
+   * @description Method for insert a superheroe
+   * @param body this is the new superheroe 
    */
-  public async insertHeroe(body: any): Promise<any> {
+  public async createSuperheroe(body: any): Promise<any> {
     let response: any;
     try {
-      const insertDynamo: any = await commonDB.putRecord(
-        DBConfigurations.tableHeroesName,
+      const insertDynamo: any = await operationsDB.addElement(
+        DBConfigurations.superheroesTable,
         body
       );
       response = await genericFunctions.setResponse(
@@ -31,7 +31,6 @@ class Heroes {
         body
       );
     } catch (error) {
-      console.log("error", error);
       response = await genericFunctions.setResponse(
         CODES.SERVER_ERROR,
         STATUS_DESCRIPTION.ERROR,
@@ -42,24 +41,24 @@ class Heroes {
   }
 
   /**
-   * @name listHeroes
-   * @description method for get all the items
+   * @name listSuperheroes
+   * @description method for get all the superheroes from the database
    * @returns {Object}
    */
-  public async listHeroes(): Promise<any> {
+  public async listSuperheroes(): Promise<any> {
     let response: any;
     try {
-      const listDynamo: any = await commonDB.getAllRecord(
-        DBConfigurations.tableHeroesName
+      const listDynamo: any = await operationsDB.getAllElements(
+        DBConfigurations.superheroesTable
       );
-      console.log("list dynamo", listDynamo);
+      
       response = await genericFunctions.setResponse(
         CODES.SUCCESS,
         STATUS_DESCRIPTION.SUCCESS,
         listDynamo
       );
     } catch (error) {
-      console.log("error", error);
+      
       response = await genericFunctions.setResponse(
         CODES.SERVER_ERROR,
         STATUS_DESCRIPTION.ERROR,
@@ -70,16 +69,16 @@ class Heroes {
   }
 
   /**
-   * @name getHeroe
-   * @description method for get an Heroe
-   * @param id - identifier
+   * @name getSuperheroe
+   * @description method for get a superheroe
+   * @param id - id from the superheroe
    * @returns {Object}
    */
-  public async getHeroe(id: string): Promise<any> {
+  public async getSuperheroe(id: string): Promise<any> {
     let response: any;
     try {
-      let getItem: any = await commonDB.getRecord(
-        DBConfigurations.tableHeroesName,
+      let getItem: any = await operationsDB.getElement(
+        DBConfigurations.superheroesTable,
         id
       );
       if(getItem==undefined){
@@ -91,7 +90,7 @@ class Heroes {
         getItem
       );
     } catch (error) {
-      console.log("error", error);
+      
       response = await genericFunctions.setResponse(
         CODES.SERVER_ERROR,
         STATUS_DESCRIPTION.ERROR,
@@ -102,17 +101,17 @@ class Heroes {
   }
 
   /**
-   * @name updateHeroes
-   * @description method fot update a hero
+   * @name updateSuperheroes
+   * @description method fot update a superhero
    * @param body
    * @returns {Object}
    */
-  public async updateHeroes(body: any): Promise<any> {
+  public async updateSuperheroes(body: any): Promise<any> {
     let response: any;
     try {
-      const update: any = await commonDB.updateRecord(
+      const update: any = await operationsDB.updateElement(
         body,
-        DBConfigurations.tableHeroesName
+        DBConfigurations.superheroesTable
       );
       response = await genericFunctions.setResponse(
         CODES.SUCCESS,
@@ -120,7 +119,6 @@ class Heroes {
         body
       );
     } catch (error) {
-      console.log("error", error);
       response = await genericFunctions.setResponse(
         CODES.SERVER_ERROR,
         STATUS_DESCRIPTION.ERROR,
@@ -131,16 +129,16 @@ class Heroes {
   }
 
   /**
-   * @name deleteHeroe
-   * @description method for deletele a hero
-   * @param id 
+   * @name deleteSuperheroe
+   * @description method for deletele a superhero
+   * @param id the id from the superheroe
    * @returns {Object}
    */
-  public async deleteHeroe(id: string): Promise<any> {
+  public async deleteSuperheroe(id: string): Promise<any> {
     let response: any;
     try {
-      const deleteHeroes: any = await commonDB.deleteRecord(
-        DBConfigurations.tableHeroesName,
+      const deleteSuperheroes: any = await operationsDB.deleteElement(
+        DBConfigurations.superheroesTable,
         id
       );
       response = await genericFunctions.setResponse(
@@ -149,7 +147,6 @@ class Heroes {
         id
       );
     } catch (error) {
-      console.log("error", error);
       response = await genericFunctions.setResponse(
         CODES.SERVER_ERROR,
         STATUS_DESCRIPTION.ERROR,
@@ -160,5 +157,5 @@ class Heroes {
   }
 }
 
-const heroes = new Heroes();
+const heroes = new Superheroes();
 export default heroes;

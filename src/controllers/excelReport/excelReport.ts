@@ -1,5 +1,5 @@
 import json2csv from "json-2-csv";
-import heroes from "../heroes/heroes";
+import superheroes from "../superheroes/superheroes";
 import s3Controller from "../s3/s3Controller";
 import {
   ExtensionFiles,
@@ -9,29 +9,28 @@ import {
 import genericFunctions from "../../utils/genericResponse";
 
 /**
- * @name CsvReports
- * @description class for generate the csv reports
+ * @name ExcelReport
+ * @description class for generate the excel report with a csv output
  */
-class CsvReports {
+class ExcelReport {
   /**
-   * @name generateHeroesCSVReport
-   * @description method for get all data and create a csv report
+   * @name generateSuperheroesExcelReport
+   * @description this is a method for get all data and create a csv report
    * @returns String with the url with the report
    */
-  public async generateHeroesCSVReport(): Promise<any> {
+  public async generateSuperheroesExcelReport(): Promise<any> {
     let body: any = {};
     let response: any = await genericFunctions.setResponse(CODES.SUCCESS,STATUS_DESCRIPTION.SUCCESS,null);
     try {
-      const allData: any = await heroes.listHeroes();
+      const allData: any = await superheroes.listSuperheroes();
       let dataJson = JSON.parse(allData.body)
-      console.log("data json", dataJson)
       if (dataJson.body != null && dataJson.body.length > 0) {
         const csv = await json2csv.json2csvAsync(dataJson.body);
         let url: string = await s3Controller.uploadFile(
           csv,
           ExtensionFiles.CSV
         );
-        console.log("url",url)
+        
         if (url) {
           body = { url: url };
           response = await genericFunctions.setResponse(
@@ -59,5 +58,5 @@ class CsvReports {
   }
 }
 
-const csvReports = new CsvReports();
+const csvReports = new ExcelReport();
 export default csvReports;

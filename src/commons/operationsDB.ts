@@ -2,25 +2,26 @@ import * as AWS from "aws-sdk";
 AWS.config.update({ region: "us-east-1" });
 
 /**
- * @name CommonDB
+ * @name operationsDB
  * @description This is the generic class for any CRUD operation in any class/model
  */
-class CommonDB {
+class OperationsDB {
   /**
-   * @name putRecord
-   * @description generic method for insert a register in dynamo
-   * @param tableName
-   * @param item
+   * @name addElement
+   * @description this is a method for insert a register in the database
+   * @param tableName this is the name of the database
+   * @param element this is the element to insert
    * @returns {Object}
    */
-  public async putRecord(tableName: string, item: any): Promise<any> {
+  /* istanbul ignore next */
+  public async addElement(tableName: string, element: any): Promise<any> {
     const docClient = new AWS.DynamoDB.DocumentClient({
       apiVersion: "2012-08-10",
       convertEmptyValues: true,
     });
     const params = {
       TableName: tableName,
-      Item: item,
+      Item: element,
       ReturnValues: "ALL_OLD",
     };
     let data: any;
@@ -30,13 +31,14 @@ class CommonDB {
   }
 
   /**
-   * @name getRecord
-   * @description method for get a register
-   * @param tableName
-   * @param id
+   * @name getElement
+   * @description method for get a a element from the database
+   * @param tableName this is the name of the table
+   * @param id this is the object id to search
    * @returns {Object}
    */
-  public async getRecord<T>(
+  /* istanbul ignore next */
+  public async getElement<T>(
     tableName: string,
     id: string | undefined
   ): Promise<T> {
@@ -53,13 +55,28 @@ class CommonDB {
   }
 
   /**
-   * @name deleteRecord
-   * @description Method for delete a register
-   * @param tableName
-   * @param id
+   * @name getAllElements
+   * @description method for get all the elements from the database
+   * @param tableName this is the name of the table
    * @returns {Object}
    */
-  public async deleteRecord(tableName: string, id: any) {
+   public async getAllElements(tableName: string) {
+    var documentClient = new AWS.DynamoDB.DocumentClient();
+    var params = {
+      TableName: tableName,
+    };
+    let data = await documentClient.scan(params).promise();
+    return data.Items;
+  }
+
+  /**
+   * @name deleteElement
+   * @description Method for delete a register from the database
+   * @param tableName this is the name of the table
+   * @param id this is the object id to delete
+   * @returns {Object}
+   */
+  public async deleteElement(tableName: string, id: any) {
     const docClient = new AWS.DynamoDB.DocumentClient({
       apiVersion: "2012-08-10",
       convertEmptyValues: true,
@@ -75,29 +92,16 @@ class CommonDB {
     return data;
   }
 
-  /**
-   * @name getAllRecord
-   * @description method for get all the registers
-   * @param tableName
-   * @returns {Object}
-   */
-  public async getAllRecord(tableName: string) {
-    var documentClient = new AWS.DynamoDB.DocumentClient();
-    var params = {
-      TableName: tableName,
-    };
-    let data = await documentClient.scan(params).promise();
-    return data.Items;
-  }
+  
 
   /**
-   * @name updateRecord
-   * @description method for update a record
-   * @param updateRecord
-   * @param tableName
+   * @name updateElement
+   * @description method for update an element from the database
+   * @param body the element to be modificated
+   * @param tableName this is the name of the table
    * @returns {Object}
    */
-  public async updateRecord(updateRecord: any, tableName: string) {
+  public async updateElement(body: any, tableName: string) {
     let expresionsNames: any = {};
     let expresionsValues: any = {};
     let exp = {
@@ -105,7 +109,7 @@ class CommonDB {
       ExpressionAttributeNames: expresionsNames,
       ExpressionAttributeValues: expresionsValues,
     };
-    Object.entries(updateRecord).forEach(([key, item]) => {
+    Object.entries(body).forEach(([key, item]) => {
       if (key != "id") {
         exp.UpdateExpression += ` #${key} = :${key},`;
         exp.ExpressionAttributeNames["#" + key] = key;
@@ -119,7 +123,7 @@ class CommonDB {
       TableName: tableName,
       KeyConditionExpression: "id = :id",
       ExpressionAttributeValues: {
-        ":id": updateRecord.id,
+        ":id": body.id,
       },
     };
     let data = await documentClient.query(params).promise();
@@ -136,5 +140,5 @@ class CommonDB {
   }
 }
 
-const commonDB = new CommonDB();
-export default commonDB;
+const operationDB = new OperationsDB();
+export default operationDB;

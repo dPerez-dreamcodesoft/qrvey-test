@@ -1,4 +1,4 @@
-import heroes from "../controllers/heroes/heroes";
+import superheroes from "../controllers/superheroes/superheroes";
 import { v4 as uuid_v4 } from "uuid";
 
 /**
@@ -11,7 +11,7 @@ export async function createHeroe(event: any): Promise<any> {
   let body = JSON.parse(event.body);
   body.id = uuid_v4();
   console.log("body create--", body);
-  let response: any = await heroes.insertHeroe(body);
+  let response: any = await superheroes.createSuperheroe(body);
   return response;
 }
 
@@ -21,7 +21,7 @@ export async function createHeroe(event: any): Promise<any> {
  * @returns {Object}
  */
 export async function listHeroes(): Promise<any> {
-  let response: any = await heroes.listHeroes();
+  let response: any = await superheroes.listSuperheroes();
   return response;
 }
 
@@ -34,7 +34,7 @@ export async function listHeroes(): Promise<any> {
 export async function getHeroe(body: any): Promise<any> {
   let id = body.pathParameters.id;
   console.log("id--", id);
-  const response: any = await heroes.getHeroe(id);
+  const response: any = await superheroes.getSuperheroe(id);
   return response;
 }
 
@@ -47,7 +47,7 @@ export async function getHeroe(body: any): Promise<any> {
 export async function updateHeroe(event: any): Promise<any> {
   let body = JSON.parse(event.body);
   console.log("body--", body);
-  const response: any = await heroes.updateHeroes(body);
+  const response: any = await superheroes.updateSuperheroes(body);
   return response;
 }
 
@@ -60,6 +60,6 @@ export async function updateHeroe(event: any): Promise<any> {
 export async function deleteHeroe(event: any): Promise<any> {
   let id = event.pathParameters.id;
   console.log("id--", id);
-  const response: any = await heroes.deleteHeroe(id);
+  const response: any = await superheroes.deleteSuperheroe(id);
   return response;
 }

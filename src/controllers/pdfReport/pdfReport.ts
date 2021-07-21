@@ -1,5 +1,5 @@
 import { jsPDF } from "jspdf";
-import heroes from "../heroes/heroes";
+import superheroes from "../superheroes/superheroes";
 import s3Controller from "../s3/s3Controller";
 import {
   ExtensionFiles,
@@ -28,7 +28,7 @@ class PdfReports {
       null
     );
     try {
-      const allData: any = await heroes.listHeroes();
+      const allData: any = await superheroes.listSuperheroes();
       let dataJson = JSON.parse(allData.body);
       if (dataJson.body != null && dataJson.body.length > 0) {
         let pdf = new jsPDF({ orientation: "landscape" });

@@ -1,15 +1,7 @@
 import { config as configProject } from '../../package.json';
 
 export const DBConfigurations = {
-  tableHeroesName: configProject.STACK_DB_NAME  + "-heroes-table",
-};
-
-export const Headers = {
-  "Content-Type": "application/json",
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Credentials": true,
-  "Access-Control-Allow-Headers":
-    "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+  superheroesTable: configProject.STACK_DB_NAME  + "-superheroes-table",
 };
 
 export const BucketConfigurations = {
@@ -21,17 +13,25 @@ export const ExtensionFiles = {
   PDF:"pdf"
 }
 
-export const CODES = {
-    SUCCESS: 200,
-    CLIENT_ERROR: 400,
-    SERVER_ERROR: 500
-}
+export const Headers = {
+  "Content-Type": "application/json",
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Credentials": true,
+  "Access-Control-Allow-Headers":
+    "Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token",
+};
 
 export const STATUS_DESCRIPTION = {
     SUCCESS:"SUCCESS",
     ERROR: "ERROR"
 }
 
+export const CODES = {
+  SUCCESS: 200,
+  CLIENT_ERROR: 400,
+  SERVER_ERROR: 500
+}
+
 export const Errors = {
-  NOT_EXIST_ESTENSION:"THE EXTENSION DOES NOT EXISTS"
+  NOT_EXIST_ESTENSION:"EXTENSION IS INVALID OR DOES NOT EXISTS"
 }

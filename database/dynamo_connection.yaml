@@ -3,10 +3,10 @@ Transform: 'AWS::Serverless-2016-10-31'
 Description: Dynamo backend serverless application Accounts Domain
 Resources:
 
-  HeroesTable: 
+  SuperheroesTable: 
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: !Sub "${AWS::StackName}-heroes-table"
+      TableName: !Sub "${AWS::StackName}-superheroes-table"
       BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         -
@@ -19,8 +19,8 @@ Resources:
           AttributeName: id
         
 Outputs:
-  HeroesTableArn:
-    Description: "Heroes Table Arn"
-    Value: !GetAtt HeroesTable.Arn
+  SuperheroesTableArn:
+    Description: "Superheroes Table Arn"
+    Value: !GetAtt SuperheroesTable.Arn
     Export:
-      Name: !Sub "${AWS::StackName}-HeroesTableArn"
+      Name: !Sub "${AWS::StackName}-SuperheroesTableArn"
