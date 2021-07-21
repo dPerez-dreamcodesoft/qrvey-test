@@ -1,0 +1,183 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: backend for qrvey test
+Resources:
+  QrveyLambdaBackendIAMRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName:
+        Fn::Sub: ${AWS::StackName}-QrveyBackendLambda
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Service:
+            - lambda.amazonaws.com
+          Action:
+          - sts:AssumeRole
+      Policies:
+      - PolicyName:
+          Fn::Sub: ${AWS::StackName}-QrveyBackendLambdaIAMPolicy
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Action:
+            - logs:*
+            - dynamodb:*
+            - autoscaling:CompleteLifecycleAction
+            - lambda:*
+            - s3:*
+            Resource: '*'
+  ApiGateway:
+    Type: AWS::Serverless::Api
+    Properties:
+      Name:
+        Fn::Sub: ${AWS::StackName}
+      StageName: Develop
+      Variables:
+        ApiGateway:
+          Ref: ApiGateway
+        region:
+          Ref: AWS::Region
+  CreateHero:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://qrvet-bucket-backend/27918394d54e3f5d48c332569bb425db
+      Description: Create a Hero in a database
+      Handler: src/functions/crudHeroesHandler.createHeroe
+      Role:
+        Fn::GetAtt:
+        - QrveyLambdaBackendIAMRole
+        - Arn
+      Runtime: nodejs12.x
+      Timeout: 10
+      Events:
+        PostDynamoDBEndPointHTTP:
+          Type: Api
+          Properties:
+            Path: /createHero
+            Method: POST
+            RestApiId:
+              Ref: ApiGateway
+  GetHero:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://qrvet-bucket-backend/27918394d54e3f5d48c332569bb425db
+      Description: Get a hero from a table
+      Handler: src/functions/crudHeroesHandler.getHeroe
+      Role:
+        Fn::GetAtt:
+        - QrveyLambdaBackendIAMRole
+        - Arn
+      Runtime: nodejs12.x
+      Timeout: 10
+      Events:
+        GetDynamoDBEndPointHTTP:
+          Type: Api
+          Properties:
+            Path: /getHero/{id}
+            Method: GET
+            RestApiId:
+              Ref: ApiGateway
+  DeleteHero:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://qrvet-bucket-backend/27918394d54e3f5d48c332569bb425db
+      Description: Delete a hero in the database
+      Handler: src/functions/crudHeroesHandler.deleteHeroe
+      Role:
+        Fn::GetAtt:
+        - QrveyLambdaBackendIAMRole
+        - Arn
+      Runtime: nodejs12.x
+      Timeout: 10
+      Events:
+        DeleteDynamoDBEndPointHTTP:
+          Type: Api
+          Properties:
+            Path: /deleteHero/{id}
+            Method: DELETE
+            RestApiId:
+              Ref: ApiGateway
+  UpdateHero:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://qrvet-bucket-backend/27918394d54e3f5d48c332569bb425db
+      Description: Update a hero in the database
+      Handler: src/functions/crudHeroesHandler.updateHeroe
+      Role:
+        Fn::GetAtt:
+        - QrveyLambdaBackendIAMRole
+        - Arn
+      Runtime: nodejs12.x
+      Timeout: 10
+      Events:
+        PatchDynamoDBEndPointHTTP:
+          Type: Api
+          Properties:
+            Path: /UpdateHero
+            Method: PATCH
+            RestApiId:
+              Ref: ApiGateway
+  ListHeroes:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://qrvet-bucket-backend/27918394d54e3f5d48c332569bb425db
+      Description: Get all the heros
+      Handler: src/functions/crudHeroesHandler.listHeroes
+      Role:
+        Fn::GetAtt:
+        - QrveyLambdaBackendIAMRole
+        - Arn
+      Runtime: nodejs12.x
+      Timeout: 10
+      Events:
+        ListDynamoDBEndPointHTTP:
+          Type: Api
+          Properties:
+            Path: /listHeroes
+            Method: GET
+            RestApiId:
+              Ref: ApiGateway
+  CreateReportHeroesCsv:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://qrvet-bucket-backend/27918394d54e3f5d48c332569bb425db
+      Description: Get all the heros for create a csv report
+      Handler: src/functions/csvReportHandler.csvHeroesReport
+      Role:
+        Fn::GetAtt:
+        - QrveyLambdaBackendIAMRole
+        - Arn
+      Runtime: nodejs12.x
+      Timeout: 10
+      Events:
+        ReportCsvEndPointHTTP:
+          Type: Api
+          Properties:
+            Path: /csvReport
+            Method: GET
+            RestApiId:
+              Ref: ApiGateway
+  CreateReportHeroesPdf:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: s3://qrvet-bucket-backend/27918394d54e3f5d48c332569bb425db
+      Description: Get all the heros for create a pdf report
+      Handler: src/functions/pdfReportHandler.pdfHeroesReports
+      Role:
+        Fn::GetAtt:
+        - QrveyLambdaBackendIAMRole
+        - Arn
+      Runtime: nodejs12.x
+      Timeout: 10
+      Events:
+        ReportPdfEndPointHTTP:
+          Type: Api
+          Properties:
+            Path: /pdfReport
+            Method: GET
+            RestApiId:
+              Ref: ApiGateway
