@@ -24,7 +24,7 @@ This project is developed with NodeJS and Typescript, however because the data i
 - **npm run pack**
 - **npm run depl**
 
-Additionally you can run ** npm run test ** and it will create the coverage folder inside you can find inside a Icov-report folder a html file (index), if you open thar file you will be able to see the coverage.
+Additionally you can run **npm run test** and it will create the coverage folder inside you can find inside a Icov-report folder a html file (index), if you open thar file you will be able to see the coverage.
 
 ### Coverage image
 
