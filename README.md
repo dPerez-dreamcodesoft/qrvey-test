@@ -41,10 +41,10 @@ https://www.getpostman.com/collections/02d2a987ae9fe036ec18
 
 ## EndPoints whith parameters
 
-- Get superhero:    https://3209z3wbm6.execute-api.us-east-1.amazonaws.com/Develop/getSuperhero/heroeId
-- Delete superhero: https://3209z3wbm6.execute-api.us-east-1.amazonaws.com/Develop/deleteSuperhero/heroeId
+- Get superhero:    https://3209z3wbm6.execute-api.us-east-1.amazonaws.com/Develop/getSuperhero/heroId
+- Delete superhero: https://3209z3wbm6.execute-api.us-east-1.amazonaws.com/Develop/deleteSuperhero/heroId
 
-**heroeId** is the Id for the superheroe to search
+**heroId** is the Id for the superhero to search
 
 ### Coverage
 
