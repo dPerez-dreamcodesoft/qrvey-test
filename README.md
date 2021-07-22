@@ -50,6 +50,6 @@ https://www.getpostman.com/collections/02d2a987ae9fe036ec18
 
 Code coverage is above 80%.
 
-![Coverage](https://github.com/dPerez-dreamcodesoft/qrvey-test/blob/97ff24af9a950034e87362e8826ee71c240d2c24/coverageImage.png)
+![Coverage](coverageImage.png)
 
 
