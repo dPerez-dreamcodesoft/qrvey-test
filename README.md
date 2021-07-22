@@ -17,7 +17,7 @@ This project is developed with NodeJS and Typescript, however because the data i
 
 ### how to deploy
 
-- **npm install**
+- **npm i**
 - **npm run createBucket** (execute only if the bucket does not exist)
 - **npm run packDB** (execute only if the database tables does not exists or are updated)
 - **npm run deplDB** (execute only if the database tables does not exists or are updated)
