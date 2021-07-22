@@ -5,7 +5,7 @@ import pdfReport from '../controllers/pdfReport/pdfReport';
  * @description Method for generate the pdf report
  * @returns Object
  */
-export async function pdfHeroesReports():Promise<any>{
+export async function pdfSuperheroesReports():Promise<any>{
     let response:any = await pdfReport.generateHeroesPdfReport();
     return response;
 }

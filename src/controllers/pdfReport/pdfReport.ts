@@ -3,7 +3,7 @@ import superheroes from "../superheroes/superheroes";
 import s3Controller from "../s3/s3Controller";
 import {
   ExtensionFiles,
-  CODES,
+  STATUS_CODES,
   STATUS_DESCRIPTION,
 } from "../../config/settings";
 import genericFunctions from "../../utils/genericResponse";
@@ -23,7 +23,7 @@ class PdfReports {
   public async generateHeroesPdfReport(): Promise<any> {
     let body: any = {};
     let response: any = await genericFunctions.setResponse(
-      CODES.SUCCESS,
+      STATUS_CODES.SUCCESS,
       STATUS_DESCRIPTION.SUCCESS,
       null
     );
@@ -41,25 +41,20 @@ class PdfReports {
           this.dataArray = [];
         }
         let headerFormat: any = this.createHeaders(this.headerArray);
-        console.log(headerFormat);
-        console.log(listObj);
         let dataPdf = await pdf.table(1, 1, listObj, headerFormat, {
           autoSize: true,
         });
-        console.log("47");
-        console.log(dataPdf.output());
         let pdfUrl = await s3Controller.uploadFile(dataPdf.output(), "pdf");
         body = { url: pdfUrl };
         response = await genericFunctions.setResponse(
-          CODES.SUCCESS,
+          STATUS_CODES.SUCCESS,
           STATUS_DESCRIPTION.SUCCESS,
           body
         );
       }
     } catch (error) {
-      console.log("error", error);
       response = await genericFunctions.setResponse(
-        CODES.SERVER_ERROR,
+        STATUS_CODES.SERVER_ERROR,
         STATUS_DESCRIPTION.ERROR,
         null
       );
@@ -89,16 +84,12 @@ class PdfReports {
    */
   private keysAndElementsFromJson(array: any): any {
     if (typeof array != "object") {
-      console.log("values");
-      console.log(array);
       this.dataArray.push(array);
     } else {
       for (let element in array) {
         if (typeof array[element] != "object") {
           this.headerArray.push(element);
         }
-        console.log("key");
-        console.log(element);
         this.keysAndElementsFromJson(array[element]);
       }
     }

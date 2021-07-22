@@ -3,7 +3,7 @@ import operationsDB from "../../commons/operationsDB";
 import {
   DBConfigurations,
   Headers,
-  CODES,
+  STATUS_CODES,
   STATUS_DESCRIPTION,
 } from "../../config/settings";
 import genericFunctions from "../../utils/genericResponse";
@@ -26,13 +26,13 @@ class Superheroes {
         body
       );
       response = await genericFunctions.setResponse(
-        CODES.SUCCESS,
+        STATUS_CODES.SUCCESS,
         STATUS_DESCRIPTION.SUCCESS,
         body
       );
     } catch (error) {
       response = await genericFunctions.setResponse(
-        CODES.SERVER_ERROR,
+        STATUS_CODES.SERVER_ERROR,
         STATUS_DESCRIPTION.ERROR,
         null
       );
@@ -53,14 +53,14 @@ class Superheroes {
       );
       
       response = await genericFunctions.setResponse(
-        CODES.SUCCESS,
+        STATUS_CODES.SUCCESS,
         STATUS_DESCRIPTION.SUCCESS,
         listDynamo
       );
     } catch (error) {
       
       response = await genericFunctions.setResponse(
-        CODES.SERVER_ERROR,
+        STATUS_CODES.SERVER_ERROR,
         STATUS_DESCRIPTION.ERROR,
         null
       );
@@ -85,14 +85,14 @@ class Superheroes {
         getItem = "Does not exist information for this user"
       }
       response = await genericFunctions.setResponse(
-        CODES.SUCCESS,
+        STATUS_CODES.SUCCESS,
         STATUS_DESCRIPTION.SUCCESS,
         getItem
       );
     } catch (error) {
       
       response = await genericFunctions.setResponse(
-        CODES.SERVER_ERROR,
+        STATUS_CODES.SERVER_ERROR,
         STATUS_DESCRIPTION.ERROR,
         null
       );
@@ -114,13 +114,13 @@ class Superheroes {
         DBConfigurations.superheroesTable
       );
       response = await genericFunctions.setResponse(
-        CODES.SUCCESS,
+        STATUS_CODES.SUCCESS,
         STATUS_DESCRIPTION.SUCCESS,
         body
       );
     } catch (error) {
       response = await genericFunctions.setResponse(
-        CODES.SERVER_ERROR,
+        STATUS_CODES.SERVER_ERROR,
         STATUS_DESCRIPTION.ERROR,
         null
       );
@@ -142,13 +142,13 @@ class Superheroes {
         id
       );
       response = await genericFunctions.setResponse(
-        CODES.SUCCESS,
+        STATUS_CODES.SUCCESS,
         STATUS_DESCRIPTION.SUCCESS,
         id
       );
     } catch (error) {
       response = await genericFunctions.setResponse(
-        CODES.SERVER_ERROR,
+        STATUS_CODES.SERVER_ERROR,
         STATUS_DESCRIPTION.ERROR,
         null
       );

@@ -38,7 +38,7 @@ class S3Controller {
    */
   private async getContenType(extension: string){
     let contentTypeMap: Map<string, string> = new Map();
-    contentTypeMap.set("",Errors.NOT_EXIST_ESTENSION);
+    contentTypeMap.set("",Errors.INVALID_EXTENSION);
     contentTypeMap.set(ExtensionFiles.CSV,"application/csv");
     contentTypeMap.set(ExtensionFiles.PDF,"application/pdf");
     return contentTypeMap.has(extension) ? contentTypeMap.get(extension) : contentTypeMap.get("");

@@ -43,12 +43,12 @@ Resources:
                 region: !Ref AWS::Region
 
 
-    CreateHero:
+    CreateSuperheroe:
         Type: 'AWS::Serverless::Function'
         Properties:
             CodeUri: dist/
-            Description: 'Create a Hero in a database'
-            Handler: src/functions/crudHeroesHandler.createHeroe
+            Description: 'Create a superhero in a database'
+            Handler: src/functions/superheroesHandler.createSuperheroe
             Role: !GetAtt QrveyLambdaBackendIAMRole.Arn
             Runtime: nodejs12.x
             Timeout: 10
@@ -56,7 +56,7 @@ Resources:
                 PostDynamoDBEndPointHTTP:
                     Type: Api
                     Properties:
-                        Path: /createHero
+                        Path: /createSuperheroe
                         Method: POST   
                         RestApiId: !Ref ApiGateway         
  
@@ -64,8 +64,8 @@ Resources:
         Type: 'AWS::Serverless::Function'
         Properties:
             CodeUri: dist/
-            Description: 'Get a hero from a table'
-            Handler: src/functions/crudHeroesHandler.getHeroe
+            Description: 'Get a superhero from a table'
+            Handler: src/functions/superheroesHandler.getSuperheroe
             Role: !GetAtt QrveyLambdaBackendIAMRole.Arn
             Runtime: nodejs12.x
             Timeout: 10
@@ -73,16 +73,16 @@ Resources:
                 GetDynamoDBEndPointHTTP:
                     Type: Api
                     Properties:
-                        Path: /getHero/{id}
+                        Path: /getSuperhero/{id}
                         Method: GET   
                         RestApiId: !Ref ApiGateway         
           
-    DeleteHero:
+    DeleteSuperhero:
         Type: 'AWS::Serverless::Function'
         Properties:
             CodeUri: dist/
-            Description: 'Delete a hero in the database'
-            Handler: src/functions/crudHeroesHandler.deleteHeroe
+            Description: 'Delete a superhero in the database'
+            Handler: src/functions/superheroesHandler.deleteSuperheroe
             Role: !GetAtt QrveyLambdaBackendIAMRole.Arn
             Runtime: nodejs12.x
             Timeout: 10
@@ -90,16 +90,16 @@ Resources:
                 DeleteDynamoDBEndPointHTTP:
                     Type: Api
                     Properties:
-                        Path: /deleteHero/{id}
+                        Path: /deleteSuperhero/{id}
                         Method: DELETE   
                         RestApiId: !Ref ApiGateway         
                        
-    UpdateHero:
+    UpdateSuperhero:
         Type: 'AWS::Serverless::Function'
         Properties:
             CodeUri: dist/
-            Description: 'Update a hero in the database'
-            Handler: src/functions/crudHeroesHandler.updateHeroe
+            Description: 'Update a superhero in the database'
+            Handler: src/functions/superheroesHandler.updateSuperheroe
             Role: !GetAtt QrveyLambdaBackendIAMRole.Arn
             Runtime: nodejs12.x
             Timeout: 10
@@ -107,16 +107,16 @@ Resources:
                 PatchDynamoDBEndPointHTTP:
                     Type: Api
                     Properties:
-                        Path: /UpdateHero
+                        Path: /updateSuperhero
                         Method: PATCH   
                         RestApiId: !Ref ApiGateway         
                        
-    ListHeroes:
+    ListSuperheroes:
         Type: 'AWS::Serverless::Function'
         Properties:
             CodeUri: dist/
-            Description: 'Get all the heros'
-            Handler: src/functions/crudHeroesHandler.listHeroes
+            Description: 'Get all the superheroes'
+            Handler: src/functions/superheroesHandler.listSuperheroes
             Role: !GetAtt QrveyLambdaBackendIAMRole.Arn
             Runtime: nodejs12.x
             Timeout: 10
@@ -124,15 +124,15 @@ Resources:
                 ListDynamoDBEndPointHTTP:
                     Type: Api
                     Properties:
-                        Path: /listHeroes
+                        Path: /listSuperheroes
                         Method: GET   
                         RestApiId: !Ref ApiGateway
 
-    CreateReportHeroesCsv:
+    CreateExcelReport:
         Type: 'AWS::Serverless::Function'
         Properties:
             CodeUri: dist/
-            Description: 'Get all the heros for create a csv report'
+            Description: 'Get all the superheroes for create a excel report'
             Handler: src/functions/excelReportHandler.excelSuperheroesReport
             Role: !GetAtt QrveyLambdaBackendIAMRole.Arn
             Runtime: nodejs12.x
@@ -141,16 +141,16 @@ Resources:
                 ReportCsvEndPointHTTP:
                     Type: Api
                     Properties:
-                        Path: /csvReport
+                        Path: /excelReport
                         Method: GET   
                         RestApiId: !Ref ApiGateway 
 
-    CreateReportHeroesPdf:
+    CreatePdfReport:
         Type: 'AWS::Serverless::Function'
         Properties:
             CodeUri: dist/
-            Description: 'Get all the heros for create a pdf report'
-            Handler: src/functions/pdfReportHandler.pdfHeroesReports
+            Description: 'Get all the superheroes for create a pdf report'
+            Handler: src/functions/pdfReportHandler.pdfSuperheroesReports
             Role: !GetAtt QrveyLambdaBackendIAMRole.Arn
             Runtime: nodejs12.x
             Timeout: 10

@@ -3,7 +3,7 @@ import superheroes from "../superheroes/superheroes";
 import s3Controller from "../s3/s3Controller";
 import {
   ExtensionFiles,
-  CODES,
+  STATUS_CODES,
   STATUS_DESCRIPTION,
 } from "../../config/settings";
 import genericFunctions from "../../utils/genericResponse";
@@ -20,7 +20,7 @@ class ExcelReport {
    */
   public async generateSuperheroesExcelReport(): Promise<any> {
     let body: any = {};
-    let response: any = await genericFunctions.setResponse(CODES.SUCCESS,STATUS_DESCRIPTION.SUCCESS,null);
+    let response: any = await genericFunctions.setResponse(STATUS_CODES.SUCCESS,STATUS_DESCRIPTION.SUCCESS,null);
     try {
       const allData: any = await superheroes.listSuperheroes();
       let dataJson = JSON.parse(allData.body)
@@ -34,22 +34,21 @@ class ExcelReport {
         if (url) {
           body = { url: url };
           response = await genericFunctions.setResponse(
-            CODES.SUCCESS,
+            STATUS_CODES.SUCCESS,
             STATUS_DESCRIPTION.SUCCESS,
             body
           );
         } else {
           response = await genericFunctions.setResponse(
-            CODES.SERVER_ERROR,
+            STATUS_CODES.SERVER_ERROR,
             STATUS_DESCRIPTION.ERROR,
             null
           );
         }
       }
     } catch (error) {
-      console.log("error",error)
       response = await genericFunctions.setResponse(
-        CODES.SERVER_ERROR,
+        STATUS_CODES.SERVER_ERROR,
         STATUS_DESCRIPTION.ERROR,
         null
       );

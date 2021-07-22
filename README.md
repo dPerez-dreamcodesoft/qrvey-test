@@ -26,11 +26,29 @@ This project is developed with NodeJS and Typescript, however because the data i
 
 Additionally you can run **npm run test** and it will create the coverage folder inside you can find inside a Icov-report folder a html file (index), if you open thar file you will be able to see the coverage.
 
-### Coverage image
+## API
+### Postman collection
+
+https://www.getpostman.com/collections/02d2a987ae9fe036ec18
+
+## EndPoints
+
+- Create superHero: https://3209z3wbm6.execute-api.us-east-1.amazonaws.com/Develop/createSuperheroe 
+- Update superhero: https://3209z3wbm6.execute-api.us-east-1.amazonaws.com/Develop/updateSuperhero
+- List superheroes: https://3209z3wbm6.execute-api.us-east-1.amazonaws.com/Develop/listSuperheroes
+- Excel Report: https://3209z3wbm6.execute-api.us-east-1.amazonaws.com/Develop/excelReport
+- PDF Report: https://3209z3wbm6.execute-api.us-east-1.amazonaws.com/Develop/pdfReport 
+
+## EndPoints whith parameters
+
+- Get superhero:    https://3209z3wbm6.execute-api.us-east-1.amazonaws.com/Develop/getSuperhero/heroeId
+- Delete superhero: https://3209z3wbm6.execute-api.us-east-1.amazonaws.com/Develop/deleteSuperhero/heroeId
+**heroeId** is the Id for the superheroe to search
+
+### Coverage
+
+Code coverage is above 80%.
 
 ![Coverage](https://github.com/dPerez-dreamcodesoft/qrvey-test/blob/97ff24af9a950034e87362e8826ee71c240d2c24/coverageImage.png)
 
 
-#### Postman collection
-
-https://www.getpostman.com/collections/4195cafef8a136a30bf0

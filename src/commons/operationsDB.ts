@@ -13,7 +13,7 @@ class OperationsDB {
    * @param element this is the element to insert
    * @returns {Object}
    */
-  /* istanbul ignore next */
+  
   public async addElement(tableName: string, element: any): Promise<any> {
     const docClient = new AWS.DynamoDB.DocumentClient({
       apiVersion: "2012-08-10",
@@ -25,7 +25,6 @@ class OperationsDB {
       ReturnValues: "ALL_OLD",
     };
     let data: any;
-
     data = await docClient.put(params).promise();
     return data;
   }
@@ -37,7 +36,7 @@ class OperationsDB {
    * @param id this is the object id to search
    * @returns {Object}
    */
-  /* istanbul ignore next */
+ 
   public async getElement<T>(
     tableName: string,
     id: string | undefined

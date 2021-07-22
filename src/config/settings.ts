@@ -1,12 +1,13 @@
 import { config as configProject } from '../../package.json';
 
-export const DBConfigurations = {
-  superheroesTable: configProject.STACK_DB_NAME  + "-superheroes-table",
-};
 
 export const BucketConfigurations = {
   nameBucket: configProject.QRVEY_BUCKET_NAME
 }
+
+export const DBConfigurations = {
+  superheroesTable: configProject.STACK_DB_NAME  + "-superheroes-table",
+};
 
 export const ExtensionFiles = {
   CSV:"csv",
@@ -26,12 +27,12 @@ export const STATUS_DESCRIPTION = {
     ERROR: "ERROR"
 }
 
-export const CODES = {
+export const STATUS_CODES = {
   SUCCESS: 200,
   CLIENT_ERROR: 400,
   SERVER_ERROR: 500
 }
 
 export const Errors = {
-  NOT_EXIST_ESTENSION:"EXTENSION IS INVALID OR DOES NOT EXISTS"
+  INVALID_EXTENSION:"EXTENSION IS INVALID OR DOES NOT EXISTS"
 }
